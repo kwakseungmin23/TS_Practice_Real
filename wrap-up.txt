@@ -1,0 +1,17 @@
+Wrap Up
+Javascript uses runtime types, Typescript uses static types that matter during development.
+Javascript doesn't include any type assignments.
+We had look a numbers, strings, booleans, function types, setting return types,
+arguments types, also describing the type of an overall function which can be
+helpful if you wanna have variable that eventually holds a function.
+We had a look at objects and arrays and enums, tuples.
+Aliases, types aliases, merge complex types into aliases that we can reuse.
+we had look at literal types, union types.
+unknown and never.
+
+Wrap Up Typescript Compiler & Configuration
+We had a very detailed look at the typescript compiler.
+How you can configure it, how to make sure that it really compiles your code the way you want.
+All these different ts options,
+strict options, really allow you to write correct code and not run into strange bugs.
+We had a look at debugging, how to easily configure Chrome, debug using sourcemap option.
