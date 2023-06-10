@@ -2,6 +2,10 @@ class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   formElement: HTMLFormElement;
+  titleInputElement: HTMLInputElement;
+  descriptionInputElement: HTMLInputElement;
+  peopleInputElement: HTMLInputElement;
+
   constructor() {
     this.templateElement = document.getElementById(
       "project-input"
@@ -15,6 +19,15 @@ class ProjectInput {
     this.formElement = importedNode.firstElementChild as HTMLFormElement;
     this.formElement.id = "user-input";
     this.attach();
+    this.titleInputElement = this.formElement.querySelector(
+      "#title"
+    ) as HTMLInputElement;
+    this.descriptionInputElement = this.formElement.querySelector(
+      "#description"
+    ) as HTMLInputElement;
+    this.peopleInputElement = this.formElement.querySelector(
+      "#people"
+    ) as HTMLInputElement;
   }
   // i just wanna split my collection and rendering logic.
   private attach() {
