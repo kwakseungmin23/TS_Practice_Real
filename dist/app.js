@@ -6,6 +6,7 @@ class ProjectInput {
         // when we create a new instance of this class, i immediately wanna render a form that belongs to this instance.
         const importedNode = document.importNode(this.templateElement.content, true);
         this.formElement = importedNode.firstElementChild;
+        this.formElement.id = "user-input";
         this.attach();
     }
     // i just wanna split my collection and rendering logic.

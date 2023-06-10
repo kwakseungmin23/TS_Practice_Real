@@ -13,6 +13,7 @@ class ProjectInput {
       true
     );
     this.formElement = importedNode.firstElementChild as HTMLFormElement;
+    this.formElement.id = "user-input";
     this.attach();
   }
   // i just wanna split my collection and rendering logic.
