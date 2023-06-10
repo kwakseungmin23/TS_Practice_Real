@@ -19,6 +19,7 @@ class ProjectInput {
     this.formElement = importedNode.firstElementChild as HTMLFormElement;
     this.formElement.id = "user-input";
     this.attach();
+    this.configure();
     this.titleInputElement = this.formElement.querySelector(
       "#title"
     ) as HTMLInputElement;
@@ -33,6 +34,13 @@ class ProjectInput {
   private attach() {
     // reach out to the hostElement where i want to render my content.
     this.hostElement.insertAdjacentElement("afterbegin", this.formElement); // formElement 바로 뒤에, import 된 template node 를 insert 합니다.
+  }
+  private submitHandler(event: Event) {
+    event.preventDefault();
+    console.log(this.titleInputElement.value);
+  }
+  private configure() {
+    this.formElement.addEventListener("submit", this.submitHandler.bind(this));
   }
 }
 
