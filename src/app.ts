@@ -1,3 +1,18 @@
+function AutoBind(
+  _target: any,
+  _methodName: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+}
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -35,12 +50,14 @@ class ProjectInput {
     // reach out to the hostElement where i want to render my content.
     this.hostElement.insertAdjacentElement("afterbegin", this.formElement); // formElement 바로 뒤에, import 된 template node 를 insert 합니다.
   }
+  @AutoBind
   private submitHandler(event: Event) {
     event.preventDefault();
     console.log(this.titleInputElement.value);
   }
+
   private configure() {
-    this.formElement.addEventListener("submit", this.submitHandler.bind(this));
+    this.formElement.addEventListener("submit", this.submitHandler);
   }
 }
 
