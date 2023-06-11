@@ -67,10 +67,21 @@ class ProjectInput {
     }
   }
 
+  private clearInputs() {
+    this.titleInputElement.value = "";
+    this.descriptionInputElement.value = "";
+    this.peopleInputElement.value = "";
+  }
+
   @AutoBind
   private submitHandler(event: Event) {
     event.preventDefault();
     const userInput = this.gatherUserInput();
+    if (Array.isArray(userInput)) {
+      const [t, d, p] = userInput;
+      console.log(t, d, p);
+      this.clearInputs();
+    }
   }
 
   private configure() {
