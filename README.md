@@ -1,7 +1,5 @@
 # TS_Practice_Real - Demo Application - overview
 
-<hr />
-
 ### outline
 
 This project will be able to manage a couple of projects. The active project list, finished list and we will be able to drag and drop from one list to the other.
