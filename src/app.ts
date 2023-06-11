@@ -1,3 +1,45 @@
+interface Validatable {
+  value: string | number;
+  required?: boolean; // optional parameter to set undefined case.
+  minLength?: number; // strings's minimum length.
+  maxLength?: number;
+  min?: number; // people's actual minimum number value.
+  max?: number;
+}
+function validate(validatableInput: Validatable) {
+  let isValid = true;
+  if (validatableInput.required) {
+    isValid = isValid && validatableInput.value.toString().trim().length !== 0; // value 가 없다면 length 가 0이므로 isValid 는 fasly value가 됩니다.
+  }
+  if (
+    validatableInput.minLength != null && // != -> null & undefined
+    typeof validatableInput.value === "string"
+  ) {
+    isValid =
+      isValid && validatableInput.value.length > validatableInput.minLength;
+  }
+  if (
+    validatableInput.maxLength != null && // != -> null & undefined
+    typeof validatableInput.value === "string"
+  ) {
+    isValid =
+      isValid && validatableInput.value.length < validatableInput.maxLength;
+  }
+  if (
+    validatableInput.min != null &&
+    typeof validatableInput.value == "number"
+  ) {
+    isValid = isValid && validatableInput.value > validatableInput.min;
+  }
+  if (
+    validatableInput.max != null &&
+    typeof validatableInput.value == "number"
+  ) {
+    isValid = isValid && validatableInput.value < validatableInput.max;
+  }
+  return isValid;
+}
+// validation ↑
 function AutoBind(
   _target: any,
   _methodName: string,
@@ -13,6 +55,7 @@ function AutoBind(
   };
   return adjDescriptor;
 }
+// autobind decorator ↑
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
