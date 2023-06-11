@@ -51,11 +51,20 @@ class ProjectInput {
     this.hostElement.insertAdjacentElement("afterbegin", this.formElement); // formElement 바로 뒤에, import 된 template node 를 insert 합니다.
   }
 
-  private gatherUserInput(): [string, string, number] {
+  private gatherUserInput(): [string, string, number] | void {
     const titleUserInput = this.titleInputElement.value;
     const descriptionUserInput = this.descriptionInputElement.value;
-    const peopleUserInput = this.peopleInputElement.value;
-    return ["test", "test", 1];
+    const peopleUserInput = this.peopleInputElement.value; // value property of inputElement will be text by default.
+    if (
+      titleUserInput.trim().length === 0 ||
+      descriptionUserInput.trim().length === 0 ||
+      peopleUserInput.trim().length === 0
+    ) {
+      alert("Invalid input, do not leave the form empty.");
+      return;
+    } else {
+      return [titleUserInput, descriptionUserInput, +peopleUserInput]; // tell ts that peopleUserInput is type number.(+)
+    }
   }
 
   @AutoBind
