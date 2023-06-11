@@ -1,0 +1,40 @@
+[2023-06-11 12:12:17Z INFO HostContext] No proxy settings were found based on environmental variables (http_proxy/https_proxy/HTTP_PROXY/HTTPS_PROXY)
+[2023-06-11 12:12:17Z INFO HostContext] Well known directory 'Bin': 'C:\Users\User\Desktop\course-starting-project\actions-runner\bin'
+[2023-06-11 12:12:17Z INFO HostContext] Well known directory 'Root': 'C:\Users\User\Desktop\course-starting-project\actions-runner'
+[2023-06-11 12:12:17Z INFO HostContext] Well known config file 'Credentials': 'C:\Users\User\Desktop\course-starting-project\actions-runner\.credentials'
+[2023-06-11 12:12:18Z INFO HostContext] Well known directory 'Bin': 'C:\Users\User\Desktop\course-starting-project\actions-runner\bin'
+[2023-06-11 12:12:18Z INFO HostContext] Well known directory 'Root': 'C:\Users\User\Desktop\course-starting-project\actions-runner'
+[2023-06-11 12:12:18Z INFO HostContext] Well known config file 'Runner': 'C:\Users\User\Desktop\course-starting-project\actions-runner\.runner'
+[2023-06-11 12:12:18Z INFO Listener] Runner is built for Windows (X64) - win-x64.
+[2023-06-11 12:12:18Z INFO Listener] RuntimeInformation: Microsoft Windows 10.0.19045.
+[2023-06-11 12:12:18Z INFO Listener] Version: 2.304.0
+[2023-06-11 12:12:18Z INFO Listener] Commit: 9ef4121b5b31ee5c03b7770288213d741081f747
+[2023-06-11 12:12:18Z INFO Listener] Culture: ko-KR
+[2023-06-11 12:12:18Z INFO Listener] UI Culture: ko-KR
+[2023-06-11 12:12:18Z INFO HostContext] Well known directory 'Bin': 'C:\Users\User\Desktop\course-starting-project\actions-runner\bin'
+[2023-06-11 12:12:18Z INFO HostContext] Well known directory 'Root': 'C:\Users\User\Desktop\course-starting-project\actions-runner'
+[2023-06-11 12:12:18Z INFO Listener] Validating directory permissions for: 'C:\Users\User\Desktop\course-starting-project\actions-runner'
+[2023-06-11 12:12:18Z ERR  Terminal] WRITE ERROR: An error occurred: Permission to read the directory contents is required for 'C:\Users\User\Desktop\course-starting-project\actions-runner' and each directory up the hierarchy. Access to the path 'C:\Users\User' is denied.
+[2023-06-11 12:12:18Z ERR  Listener] System.UnauthorizedAccessException: Permission to read the directory contents is required for 'C:\Users\User\Desktop\course-starting-project\actions-runner' and each directory up the hierarchy. Access to the path 'C:\Users\User' is denied.
+ ---> System.UnauthorizedAccessException: Access to the path 'C:\Users\User' is denied.
+   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserEntries(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at System.IO.Directory.EnumerateFileSystemEntries(String path)
+   at GitHub.Runner.Sdk.IOUtil.ValidateExecutePermission(String directory)
+   --- End of inner exception stack trace ---
+   at GitHub.Runner.Sdk.IOUtil.ValidateExecutePermission(String directory)
+   at GitHub.Runner.Listener.Program.MainAsync(IHostContext context, String[] args)
+[2023-06-11 12:12:18Z ERR  Listener] #####################################################
+[2023-06-11 12:12:18Z ERR  Listener] System.UnauthorizedAccessException: Access to the path 'C:\Users\User' is denied.
+   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserEntries(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at System.IO.Directory.EnumerateFileSystemEntries(String path)
+   at GitHub.Runner.Sdk.IOUtil.ValidateExecutePermission(String directory)
