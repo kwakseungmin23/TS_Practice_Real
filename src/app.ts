@@ -16,26 +16,26 @@ function validate(validatableInput: Validatable) {
     typeof validatableInput.value === "string"
   ) {
     isValid =
-      isValid && validatableInput.value.length > validatableInput.minLength;
+      isValid && validatableInput.value.length >= validatableInput.minLength;
   }
   if (
     validatableInput.maxLength != null && // != -> null & undefined
     typeof validatableInput.value === "string"
   ) {
     isValid =
-      isValid && validatableInput.value.length < validatableInput.maxLength;
+      isValid && validatableInput.value.length <= validatableInput.maxLength;
   }
   if (
     validatableInput.min != null &&
     typeof validatableInput.value == "number"
   ) {
-    isValid = isValid && validatableInput.value > validatableInput.min;
+    isValid = isValid && validatableInput.value >= validatableInput.min;
   }
   if (
     validatableInput.max != null &&
     typeof validatableInput.value == "number"
   ) {
-    isValid = isValid && validatableInput.value < validatableInput.max;
+    isValid = isValid && validatableInput.value <= validatableInput.max;
   }
   return isValid;
 }
@@ -98,12 +98,27 @@ class ProjectInput {
     const titleUserInput = this.titleInputElement.value;
     const descriptionUserInput = this.descriptionInputElement.value;
     const peopleUserInput = this.peopleInputElement.value; // value property of inputElement will be text by default.
+    const titleValidatable: Validatable = {
+      value: titleUserInput,
+      required: true,
+    };
+    const descriptionValidatable: Validatable = {
+      value: descriptionUserInput,
+      required: true,
+      minLength: 2,
+    };
+    const peopleValidatable: Validatable = {
+      value: peopleUserInput,
+      required: true,
+      min: 1,
+    };
+
     if (
-      titleUserInput.trim().length === 0 ||
-      descriptionUserInput.trim().length === 0 ||
-      peopleUserInput.trim().length === 0
+      !validate(titleValidatable) || // at least one of them is false
+      !validate(descriptionValidatable) ||
+      !validate(peopleValidatable)
     ) {
-      alert("Invalid input, do not leave the form empty.");
+      alert("Invalid input, try again.");
       return;
     } else {
       return [titleUserInput, descriptionUserInput, +peopleUserInput]; // tell ts that peopleUserInput is type number.(+)
