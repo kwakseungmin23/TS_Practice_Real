@@ -50,10 +50,18 @@ class ProjectInput {
     // reach out to the hostElement where i want to render my content.
     this.hostElement.insertAdjacentElement("afterbegin", this.formElement); // formElement 바로 뒤에, import 된 template node 를 insert 합니다.
   }
+
+  private gatherUserInput(): [string, string, number] {
+    const titleUserInput = this.titleInputElement.value;
+    const descriptionUserInput = this.descriptionInputElement.value;
+    const peopleUserInput = this.peopleInputElement.value;
+    return ["test", "test", 1];
+  }
+
   @AutoBind
   private submitHandler(event: Event) {
     event.preventDefault();
-    console.log(this.titleInputElement.value);
+    const userInput = this.gatherUserInput();
   }
 
   private configure() {
