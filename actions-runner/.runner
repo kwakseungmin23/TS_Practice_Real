@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 2,
+  "agentName": "sampleNameOfRunner",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelines.actions.githubusercontent.com/zBKGGQMEWysdZs8jLDpxE1gJsFitOBF9mWsd62JgeZNaZYeRaa",
+  "gitHubUrl": "https://github.com/kwakseungmin23/TS_Practice_Real",
+  "workFolder": "_work"
+}
