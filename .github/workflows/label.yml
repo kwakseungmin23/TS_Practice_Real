@@ -17,4 +17,3 @@ jobs:
 
     steps:
       - uses: actions/labeler@v4
-    
