@@ -43,6 +43,32 @@ function AutoBind(_target, _methodName, descriptor) {
     return adjDescriptor;
 }
 // autobind decorator ↑
+class ProjectList {
+    constructor(type) {
+        this.type = type;
+        this.templateElement = document.getElementById("project-list");
+        this.hostElement = document.getElementById("app");
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = importedNode.firstElementChild;
+        this.element.id = `${this.type}-projects`;
+        this.console();
+        this.attach();
+        this.renderContent();
+    }
+    console() {
+        console.log(this.templateElement.content.firstElementChild);
+    }
+    attach() {
+        var _a;
+        (_a = this.hostElement) === null || _a === void 0 ? void 0 : _a.insertAdjacentElement("beforeend", this.element);
+    }
+    renderContent() {
+        const listId = `${this.type}-projects-list`;
+        this.element.querySelector("ul").id = listId;
+        this.element.querySelector("h2").textContent =
+            this.type.toUpperCase() + " PROJECTS";
+    }
+}
 class ProjectInput {
     constructor() {
         this.templateElement = document.getElementById("project-input");
@@ -100,7 +126,6 @@ class ProjectInput {
         const userInput = this.gatherUserInput();
         if (Array.isArray(userInput)) {
             const [t, d, p] = userInput;
-            console.log(t, d, p);
             this.clearInputs();
         }
     }
@@ -112,3 +137,5 @@ __decorate([
     AutoBind
 ], ProjectInput.prototype, "submitHandler", null);
 const projectInput = new ProjectInput();
+const activeProjectList = new ProjectList("active");
+const finishedProjectList = new ProjectList("finished");
