@@ -56,6 +56,39 @@ function AutoBind(
   return adjDescriptor;
 }
 // autobind decorator ↑
+class ProjectList {
+  templateElement;
+  hostElement;
+  element;
+  constructor(private type: "active" | "finished") {
+    this.templateElement = document.getElementById(
+      "project-list"
+    )! as HTMLTemplateElement;
+    this.hostElement = document.getElementById("app");
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+    this.element = importedNode.firstElementChild as HTMLElement;
+    this.element.id = `${this.type}-projects`;
+    this.console();
+    this.attach();
+    this.renderContent();
+  }
+  private console() {
+    console.log(this.templateElement.content.firstElementChild);
+  }
+  private attach() {
+    this.hostElement?.insertAdjacentElement("beforeend", this.element);
+  }
+  private renderContent() {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector("ul")!.id = listId;
+    this.element.querySelector("h2")!.textContent =
+      this.type.toUpperCase() + " PROJECTS";
+  }
+}
+
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -137,7 +170,6 @@ class ProjectInput {
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
       const [t, d, p] = userInput;
-      console.log(t, d, p);
       this.clearInputs();
     }
   }
@@ -148,3 +180,5 @@ class ProjectInput {
 }
 
 const projectInput = new ProjectInput();
+const activeProjectList = new ProjectList("active");
+const finishedProjectList = new ProjectList("finished");
