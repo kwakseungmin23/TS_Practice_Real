@@ -5,6 +5,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+//Project State Management - singleton design pattern
+class ProjectState {
+    constructor() {
+        this.projects = []; // click add button then add project here in the array.
+        this.listeners = []; // it'll be called whenever something changes.
+    }
+    static getInstance() {
+        if (this.instance) {
+            return this.instance;
+        }
+        this.instance = new ProjectState();
+        return this.instance;
+    }
+    addListner(listenerFn) {
+        this.listeners.push(listenerFn);
+    }
+    addProject(t, d, p) {
+        const newProject = {
+            id: Math.random().toString(),
+            title: t,
+            description: d,
+            people: p,
+        };
+        this.projects.push(newProject);
+        for (const listenerFn of this.listeners) {
+            // listers array modifying with listerFn
+            listenerFn(this.projects.slice()); // only return copy of the array.
+        }
+    }
+}
+const projectState = ProjectState.getInstance();
 function validate(validatableInput) {
     let isValid = true;
     if (validatableInput.required) {
@@ -47,26 +78,35 @@ class ProjectList {
     constructor(type) {
         this.type = type;
         this.templateElement = document.getElementById("project-list");
+        this.assignedProjects = []; // initialized.
         this.hostElement = document.getElementById("app");
         const importedNode = document.importNode(this.templateElement.content, true);
         this.element = importedNode.firstElementChild;
         this.element.id = `${this.type}-projects`;
-        this.console();
+        projectState.addListner((projects) => {
+            this.assignedProjects = projects;
+            this.renderProjects();
+        });
         this.attach();
         this.renderContent();
-    }
-    console() {
-        console.log(this.templateElement.content.firstElementChild);
-    }
-    attach() {
-        var _a;
-        (_a = this.hostElement) === null || _a === void 0 ? void 0 : _a.insertAdjacentElement("beforeend", this.element);
     }
     renderContent() {
         const listId = `${this.type}-projects-list`;
         this.element.querySelector("ul").id = listId;
         this.element.querySelector("h2").textContent =
             this.type.toUpperCase() + " PROJECTS";
+    }
+    attach() {
+        var _a;
+        (_a = this.hostElement) === null || _a === void 0 ? void 0 : _a.insertAdjacentElement("beforeend", this.element);
+    }
+    renderProjects() {
+        const listEl = document.getElementById(`${this.type}-projects-list`);
+        for (const prjItem of this.assignedProjects) {
+            const listItem = document.createElement("li");
+            listItem.textContent = prjItem.title;
+            listEl === null || listEl === void 0 ? void 0 : listEl.appendChild(listItem);
+        }
     }
 }
 class ProjectInput {
@@ -126,6 +166,7 @@ class ProjectInput {
         const userInput = this.gatherUserInput();
         if (Array.isArray(userInput)) {
             const [t, d, p] = userInput;
+            projectState.addProject(t, d, p);
             this.clearInputs();
         }
     }
