@@ -30,12 +30,12 @@ class ProjectState {
         };
         this.projects.push(newProject);
         for (const listenerFn of this.listeners) {
-            // listers array modifying with listerFn
+            // listeners array modifying with listenerFn
             listenerFn(this.projects.slice()); // only return copy of the array.
         }
     }
 }
-const projectState = ProjectState.getInstance();
+const projectState = ProjectState.getInstance(); // global instance
 function validate(validatableInput) {
     let isValid = true;
     if (validatableInput.required) {
@@ -105,7 +105,7 @@ class ProjectList {
         for (const prjItem of this.assignedProjects) {
             const listItem = document.createElement("li");
             listItem.textContent = prjItem.title;
-            listEl === null || listEl === void 0 ? void 0 : listEl.appendChild(listItem);
+            listEl.appendChild(listItem);
         }
     }
 }
