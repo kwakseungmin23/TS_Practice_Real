@@ -1,7 +1,25 @@
+//Project Type
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+
+class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus
+  ) {}
+}
+
 //Project State Management - singleton design pattern
+type Listener = (items: Project[]) => void; // we don't care return value - void.
+
 class ProjectState {
-  private projects: any[] = []; // click add button then add project here in the array.
-  private listeners: any[] = []; // it'll be called whenever something changes.
+  private projects: Project[] = []; // click add button then add project here in the array.
+  private listeners: Listener[] = []; // it'll be called whenever something changes.
   private static instance: ProjectState;
   private constructor() {}
 
@@ -12,24 +30,31 @@ class ProjectState {
     this.instance = new ProjectState();
     return this.instance;
   }
-  addListner(listenerFn: Function) {
+  addListner(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
-  addProject(t: string, d: string, p: number) {
-    const newProject = {
-      id: Math.random().toString(), // make unique id
-      title: t,
-      description: d,
-      people: p,
-    };
+  addProject(title: string, description: string, people: number) {
+    // const newProject = {
+    //   id: Math.random().toString(), // make unique id
+    //   title: t,
+    //   description: d,
+    //   people: p,
+    // };
+    const newProject = new Project(
+      Math.random().toString(),
+      title,
+      description,
+      people,
+      ProjectStatus.Active
+    );
     this.projects.push(newProject);
     for (const listenerFn of this.listeners) {
-      // listers array modifying with listerFn
+      // listeners array modifying with listenerFn
       listenerFn(this.projects.slice()); // only return copy of the array.
     }
   }
 }
-const projectState = ProjectState.getInstance();
+const projectState = ProjectState.getInstance(); // global instance
 
 interface Validatable {
   value: string | number;
@@ -93,13 +118,16 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: Project[];
   constructor(private type: "active" | "finished") {
     this.templateElement = document.getElementById(
       "project-list"
     )! as HTMLTemplateElement;
+
     this.assignedProjects = []; // initialized.
+
     this.hostElement = document.getElementById("app")! as HTMLDivElement;
+
     const importedNode = document.importNode(
       this.templateElement.content,
       true
@@ -107,7 +135,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement;
     this.element.id = `${this.type}-projects`;
 
-    projectState.addListner((projects: any[]) => {
+    projectState.addListner((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
@@ -128,10 +156,12 @@ class ProjectList {
     const listEl = document.getElementById(
       `${this.type}-projects-list`
     )! as HTMLUListElement;
+
     for (const prjItem of this.assignedProjects) {
       const listItem = document.createElement("li");
       listItem.textContent = prjItem.title;
-      listEl?.appendChild(listItem);
+
+      listEl.appendChild(listItem);
     }
   }
 }
